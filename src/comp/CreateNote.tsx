@@ -53,7 +53,6 @@ const CreateNote: React.FC<CreateNoteProps> = ({ AddNote }) => {
   };
 
   const ResetNote = () => {
-    console.log("hi");
     setNote(noteDefaultObject);
   };
 
