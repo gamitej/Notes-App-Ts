@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as _id } from "uuid";
 // models
 import { CreateNoteProps, NoteObject } from "@/models/note";
 // mui
@@ -18,23 +19,30 @@ const Container = styled(Box)`
     height: 30px;
     position: relative;
     bottom: -10px;
+    right: 20px;
   }
   & > span {
     position: relative;
     right: 60px;
     font-size: 12px;
   }
+  & > button {
+    position: relative;
+    top: -2px;
+  }
 `;
 
-const CreateNote: React.FC<CreateNoteProps> = () => {
+const noteDefaultObject = {
+  id: "",
+  title: "",
+  details: "",
+  color: "#F5F5F5",
+  date: new Date().toLocaleString().toString(),
+};
+
+const CreateNote: React.FC<CreateNoteProps> = ({ AddNote }) => {
   // ================= STATES ====================
-  const [note, setNote] = useState<NoteObject>({
-    id: 0,
-    title: "",
-    details: "",
-    color: "",
-    date: new Date().toLocaleString().toString(),
-  });
+  const [note, setNote] = useState<NoteObject>(noteDefaultObject);
 
   // ================= EVENT-HANDLER ====================
   const handleChange = (
@@ -44,11 +52,18 @@ const CreateNote: React.FC<CreateNoteProps> = () => {
     setNote((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
+  const ResetNote = () => {
+    console.log("hi");
+    setNote(noteDefaultObject);
   };
 
-  console.log(note);
+  const handleCreateNote = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    AddNote({ ...note, id: _id() });
+    ResetNote();
+  };
 
   /**
    * JSX
@@ -57,15 +72,26 @@ const CreateNote: React.FC<CreateNoteProps> = () => {
   return (
     <Container>
       <InputBase
-        placeholder="Enter title"
         name="title"
+        placeholder="Enter title"
+        value={note.title}
         onChange={handleChange}
       />
       <Box component="span">30</Box>
-      <InputBase placeholder="Enter details" name="details" />
+      <InputBase
+        name="details"
+        value={note.details}
+        placeholder="Enter details"
+        onChange={handleChange}
+      />
       <Box component="span">50</Box>
-      <InputBase type="color" defaultValue={"#F5F5F5"} />
-      <Button variant="outlined" onClick={handleSubmit}>
+      <InputBase
+        name="color"
+        type="color"
+        value={note.color}
+        onChange={handleChange}
+      />
+      <Button variant="outlined" onClick={handleCreateNote}>
         CREATE
       </Button>
     </Container>

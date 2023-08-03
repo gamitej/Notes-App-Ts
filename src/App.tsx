@@ -17,6 +17,8 @@ function App() {
     setNotes((prevNotes) => [note, ...prevNotes]);
   };
 
+  console.log(notes);
+
   /**
    * JSX
    */
