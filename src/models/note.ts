@@ -5,3 +5,7 @@ export interface NoteObject {
   color: string;
   date: string;
 }
+
+export interface CreateNoteProps {
+  AddNote: (note: NoteObject) => void;
+}

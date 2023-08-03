@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // models
-import { NoteObject } from "@/models/note";
+import { CreateNoteProps, NoteObject } from "@/models/note";
 // mui
 import { Box, Button, InputBase, styled } from "@mui/material";
 
@@ -26,7 +26,7 @@ const Container = styled(Box)`
   }
 `;
 
-const CreateNote: React.FC = () => {
+const CreateNote: React.FC<CreateNoteProps> = () => {
   // ================= STATES ====================
   const [note, setNote] = useState<NoteObject>({
     id: 0,
