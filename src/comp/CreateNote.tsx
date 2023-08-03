@@ -1,5 +1,8 @@
+import React, { useState } from "react";
+// models
+import { NoteObject } from "@/models/note";
+// mui
 import { Box, Button, InputBase, styled } from "@mui/material";
-import React from "react";
 
 const Container = styled(Box)`
   & > * {
@@ -24,14 +27,47 @@ const Container = styled(Box)`
 `;
 
 const CreateNote: React.FC = () => {
+  // ================= STATES ====================
+  const [note, setNote] = useState<NoteObject>({
+    id: 0,
+    title: "",
+    details: "",
+    color: "",
+    date: new Date().toLocaleString().toString(),
+  });
+
+  // ================= EVENT-HANDLER ====================
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+    setNote((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+  };
+
+  console.log(note);
+
+  /**
+   * JSX
+   */
+
   return (
     <Container>
-      <InputBase placeholder="Enter " />
+      <InputBase
+        placeholder="Enter title"
+        name="title"
+        onChange={handleChange}
+      />
       <Box component="span">30</Box>
-      <InputBase placeholder="Enter " />
+      <InputBase placeholder="Enter details" name="details" />
       <Box component="span">50</Box>
       <InputBase type="color" defaultValue={"#F5F5F5"} />
-      <Button variant="outlined">CREATE</Button>
+      <Button variant="outlined" onClick={handleSubmit}>
+        CREATE
+      </Button>
     </Container>
   );
 };
