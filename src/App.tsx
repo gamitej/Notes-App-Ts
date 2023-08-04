@@ -29,7 +29,6 @@ function App() {
     const getNotes = window.sessionStorage.getItem("getNotes");
     if (getNotes) {
       const notes = JSON.parse(getNotes);
-      console.log(notes);
       setNotes(notes);
     }
   }, []);
