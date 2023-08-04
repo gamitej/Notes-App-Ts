@@ -17,6 +17,8 @@ function App() {
     setNotes((prevNotes) => [note, ...prevNotes]);
   };
 
+  const handleDeleteNote = (id: string) => {};
+
   console.log(notes);
 
   /**
@@ -27,7 +29,7 @@ function App() {
       <Header />
       <Box style={{ padding: "10px" }}>
         <CreateNote AddNote={AddNote} />
-        <Notes notes={notes} />
+        <Notes notes={notes} handleDeleteNote={handleDeleteNote} />
       </Box>
     </div>
   );

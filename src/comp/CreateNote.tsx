@@ -13,6 +13,7 @@ const Container = styled(Box)`
     border-bottom: 1px solid #111111;
     width: 300px;
     padding-right: 15px;
+    padding: 5px;
   }
   & > div > input[type="color"] {
     width: 40px;
@@ -89,15 +90,17 @@ const CreateNote: React.FC<CreateNoteProps> = ({ AddNote }) => {
         placeholder="Enter title"
         value={note.title}
         onChange={handleChange}
+        inputProps={{ maxLength: 30, autoCorrect: "none" }}
       />
-      <Box component="span">30</Box>
+      <Box component="span">{note.title.length}/30</Box>
       <InputBase
         name="details"
         value={note.details}
         placeholder="Enter details"
         onChange={handleChange}
+        inputProps={{ maxLength: 50, autoCorrect: "none" }}
       />
-      <Box component="span">50</Box>
+      <Box component="span">{note.details.length}/50</Box>
       <InputBase
         name="color"
         type="color"
