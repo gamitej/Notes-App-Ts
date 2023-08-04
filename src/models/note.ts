@@ -1,11 +1,5 @@
-export interface NoteObject {
-  id: string;
-  title: string;
-  details: string;
-  color: string;
-  date: string;
-}
+import { NoteObject } from "./createNote";
 
-export interface CreateNoteProps {
-  AddNote: (note: NoteObject) => void;
+export interface NotesProps {
+  notes: NoteObject[];
 }

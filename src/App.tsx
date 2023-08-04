@@ -6,7 +6,7 @@ import CreateNote from "@/comp/CreateNote";
 // mui
 import { Box } from "@mui/material";
 // models
-import { NoteObject } from "./models/note";
+import { NoteObject } from "./models/createNote";
 
 function App() {
   // =================== STATES ======================
@@ -27,7 +27,7 @@ function App() {
       <Header />
       <Box style={{ padding: "10px" }}>
         <CreateNote AddNote={AddNote} />
-        <Notes />
+        <Notes notes={notes} />
       </Box>
     </div>
   );

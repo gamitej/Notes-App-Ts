@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { v4 as _id } from "uuid";
 // models
-import { CreateNoteProps, NoteObject } from "@/models/note";
+import { CreateNoteProps, NoteObject } from "@/models/createNote";
 // mui
-import { Box, Button, InputBase, styled } from "@mui/material";
+import { Box, Button, InputBase, Typography, styled } from "@mui/material";
 
 const Container = styled(Box)`
   & > * {
@@ -32,6 +32,13 @@ const Container = styled(Box)`
   }
 `;
 
+const Error = styled(Typography)`
+  background-color: lightpink;
+  color: #fff;
+  padding: 5px;
+  width: 50%;
+`;
+
 const noteDefaultObject = {
   id: "",
   title: "",
@@ -42,6 +49,7 @@ const noteDefaultObject = {
 
 const CreateNote: React.FC<CreateNoteProps> = ({ AddNote }) => {
   // ================= STATES ====================
+  const [error, setError] = useState<string>("");
   const [note, setNote] = useState<NoteObject>(noteDefaultObject);
 
   // ================= EVENT-HANDLER ====================
@@ -50,16 +58,22 @@ const CreateNote: React.FC<CreateNoteProps> = ({ AddNote }) => {
   ) => {
     const { name, value } = e.target;
     setNote((prevState) => ({ ...prevState, [name]: value }));
+    setError("");
   };
 
   const ResetNote = () => {
     setNote(noteDefaultObject);
+    setError("");
   };
 
   const handleCreateNote = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault();
+    if (!note.title && !note.details) {
+      setError("All fields are required");
+      return;
+    }
     AddNote({ ...note, id: _id() });
     ResetNote();
   };
@@ -93,6 +107,7 @@ const CreateNote: React.FC<CreateNoteProps> = ({ AddNote }) => {
       <Button variant="outlined" onClick={handleCreateNote}>
         CREATE
       </Button>
+      {error && <Error>{error}</Error>}
     </Container>
   );
 };
