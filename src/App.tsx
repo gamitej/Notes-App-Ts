@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 // comp
 import Notes from "@/comp/Notes";
 import Header from "@/comp/Header";
@@ -13,13 +13,26 @@ function App() {
   const [notes, setNotes] = useState<NoteObject[]>([]);
 
   // ================ EVENT-HANDLER ======================
+
   const AddNote = (note: NoteObject) => {
     setNotes((prevNotes) => [note, ...prevNotes]);
+    window.sessionStorage.setItem("getNotes", JSON.stringify([note, ...notes]));
   };
 
-  const handleDeleteNote = (id: string) => {};
+  const handleDeleteNote = (id: string) => {
+    const filterNotes = notes.filter((note) => note.id !== id);
+    setNotes(filterNotes);
+    window.sessionStorage.setItem("getNotes", JSON.stringify(filterNotes));
+  };
 
-  console.log(notes);
+  useEffect(() => {
+    const getNotes = window.sessionStorage.getItem("getNotes");
+    if (getNotes) {
+      const notes = JSON.parse(getNotes);
+      console.log(notes);
+      setNotes(notes);
+    }
+  }, []);
 
   /**
    * JSX
